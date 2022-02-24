@@ -2,9 +2,11 @@ package com.winzig.lexical.analyzer;
 
 public class ASCII {
 
+    private ASCII() {}
+
     public static final int NULL = 0;
-    public static int HORIZONTAL_TAB = 9;
-    public static int NEWLINE = 10;
+    public static final int HORIZONTAL_TAB = 9;
+    public static final int NEWLINE = 10;
     public static final int VERTICAL_TAB = 11;
     public static final int FORM_FEED = 12;
     public static final int SPACE = 32;

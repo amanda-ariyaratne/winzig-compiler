@@ -8,6 +8,8 @@ public class Token_Integer extends Token {
         this.value = value;
     }
 
+    public Token_Integer() {}
+
     public int getValue() {
         return value;
     }

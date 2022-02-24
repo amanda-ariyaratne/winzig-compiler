@@ -29,12 +29,24 @@ public class LexicalAnalyzer {
         input = input + (char) ASCII.NULL;
     }
 
+    public Token readNextToken() {
+        int tempLexemeBegin = lexemeBegin;
+        int tempForward = forward;
+
+        Token token = getNextToken();
+
+        lexemeBegin = tempLexemeBegin;
+        forward = tempForward;
+
+        return token;
+    }
+
     public Token getNextToken() {
         Token token = null;
 
-        int findToken = 0;
+        int tokenType = 0;
         while (token == null) {
-            switch (++findToken) {
+            switch (++tokenType) {
                 case 1: {
                     token = getIdentifier();
                     break;
@@ -118,11 +130,9 @@ public class LexicalAnalyzer {
                     }
                 }
             }
-            if (token != null) {
-                if (token instanceof Token_Comment || token instanceof Token_Whitespace) {
-                    token = null;
-                    findToken = 0;
-                }
+            if (token != null && (token instanceof Token_Comment || token instanceof Token_Whitespace)) {
+                token = null;
+                tokenType = 0;
             }
         }
         return token;
@@ -134,25 +144,16 @@ public class LexicalAnalyzer {
             int c = input.charAt(++forward);
             switch (state) {
                 case 1: {
-                    if ((c >= ASCII.UPPER_A && c <= ASCII.UPPER_Z)
-                            || (c >= ASCII.LOWER_A && c <= ASCII.LOWER_Z)
-                            || (c == ASCII.UNDERSCORE)) {
-                        state = 2;
-                    } else {
+                    if (isLetterOrUnderscore(c)) { state = 2; }
+                    else {
                         forward = lexemeBegin - 1;
                         return null;
                     }
                     break;
                 }
                 case 2: {
-                    if (! ((c >= ASCII.UPPER_A && c <= ASCII.UPPER_Z)
-                            || (c >= ASCII.LOWER_A && c <= ASCII.LOWER_Z)
-                            || (c >= ASCII.ZERO && c <= ASCII.NINE)
-                            || (c == ASCII.UNDERSCORE))) {
-                        state = 3;
-                    } else {
-                        break;
-                    }
+                    if (!isLetterOrDigitOrUnderscore(c)) { state = 3;}
+                    else { break; }
                 }
                 case 3: {
                     forward--;
@@ -167,6 +168,7 @@ public class LexicalAnalyzer {
 
                     return new Token_Identifier(identifier);
                 }
+                default: { return null; }
             }
         }
     }
@@ -195,6 +197,7 @@ public class LexicalAnalyzer {
                     lexemeBegin = forward + 1;
                     return token;
                 }
+                default: { return null; }
             }
         }
     }
@@ -203,9 +206,14 @@ public class LexicalAnalyzer {
         state = 7;
         while (true) {
             int c = input.charAt(++forward);
+            boolean b = (c == ASCII.SPACE)
+                    || (c == ASCII.NEWLINE)
+                    || (c == ASCII.FORM_FEED)
+                    || (c == ASCII.HORIZONTAL_TAB)
+                    || (c == ASCII.VERTICAL_TAB);
             switch (state) {
                 case 7: {
-                    if ((c == ASCII.SPACE) || (c == ASCII.NEWLINE) || (c == ASCII.FORM_FEED) || (c == ASCII.HORIZONTAL_TAB) || (c == ASCII.VERTICAL_TAB)) {
+                    if (b) {
                         state = 8;
                     } else {
                         forward = lexemeBegin - 1;
@@ -214,15 +222,9 @@ public class LexicalAnalyzer {
                     break;
                 }
                 case 8: {
-                    if (! ((c == ASCII.SPACE)
-                            || (c == ASCII.NEWLINE)
-                            || (c == ASCII.FORM_FEED)
-                            || (c == ASCII.HORIZONTAL_TAB)
-                            || (c == ASCII.VERTICAL_TAB))) {
+                    if (!b) {
                         state = 9;
-                    } else {
-                        break;
-                    }
+                    } else { break; }
                 }
                 case 9: {
                     forward--;
@@ -230,6 +232,7 @@ public class LexicalAnalyzer {
                     lexemeBegin = forward + 1;
                     return token;
                 }
+                default: { return null; }
             }
         }
     }
@@ -258,9 +261,8 @@ public class LexicalAnalyzer {
                     break;
                 }
                 case 12: {
-                    if (c == ASCII.SINGLE_QUOTE) {
-                        state = 13;
-                    } else {
+                    if (c == ASCII.SINGLE_QUOTE) { state = 13; }
+                    else {
                         forward = lexemeBegin - 1;
                         return null;
                     }
@@ -326,11 +328,8 @@ public class LexicalAnalyzer {
                     break;
                 }
                 case 18: {
-                    if (c == ASCII.NEWLINE || c == ASCII.FORM_FEED) {
-                        state = 19;
-                    } else {
-                        break;
-                    }
+                    if (c == ASCII.NEWLINE || c == ASCII.FORM_FEED) { state = 19; }
+                    else { break; }
                 }
                 case 19: {
                     Token token = new Token_Comment(input.substring(lexemeBegin, forward));
@@ -338,11 +337,8 @@ public class LexicalAnalyzer {
                     return token;
                 }
                 case 20: {
-                    if (c == ASCII.CLOSE_CURLY_BRACKET) {
-                        state = 21;
-                    } else {
-                        break;
-                    }
+                    if (c == ASCII.CLOSE_CURLY_BRACKET) { state = 21; }
+                    else { break; }
                 }
                 case 21: {
                     Token token;
@@ -694,6 +690,19 @@ public class LexicalAnalyzer {
             default:
                 return null;
         }
+    }
+
+    private boolean isLetterOrUnderscore(int c) {
+        return ((c >= ASCII.UPPER_A && c <= ASCII.UPPER_Z)
+                || (c >= ASCII.LOWER_A && c <= ASCII.LOWER_Z)
+                || (c == ASCII.UNDERSCORE));
+    }
+
+    private boolean isLetterOrDigitOrUnderscore(int c) {
+        return ((c >= ASCII.UPPER_A && c <= ASCII.UPPER_Z)
+                || (c >= ASCII.LOWER_A && c <= ASCII.LOWER_Z)
+                || (c >= ASCII.ZERO && c <= ASCII.NINE)
+                || (c == ASCII.UNDERSCORE));
     }
 
 }

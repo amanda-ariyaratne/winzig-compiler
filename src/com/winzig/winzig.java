@@ -10,6 +10,7 @@ public class winzig {
     public static void main(String[] args) {
 
         LexicalAnalyzer lex = new LexicalAnalyzer();
+
         try {
             lex.readInputProgram("winzig_15");
             Token token;
