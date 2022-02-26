@@ -2,17 +2,11 @@ package com.winzig.lexical.analyzer;
 
 public class Token_Identifier extends Token {
 
-    private String value;
+    public String name = "identifier";
+
+    public String value;
 
     public Token_Identifier(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
         this.value = value;
     }
 
@@ -21,5 +15,10 @@ public class Token_Identifier extends Token {
         return "Token_Identifier{" +
                 "value='" + value + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

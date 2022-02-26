@@ -2,17 +2,11 @@ package com.winzig.lexical.analyzer;
 
 public class Token_Whitespace extends Token {
 
-    private String value;
+    public String name = "whitespace";
+
+    public String value;
 
     public Token_Whitespace(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
         this.value = value;
     }
 
@@ -29,5 +23,10 @@ public class Token_Whitespace extends Token {
         return "Token_Whitespace{" +
                 "value='" + outValue + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

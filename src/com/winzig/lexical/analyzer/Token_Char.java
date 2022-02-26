@@ -2,18 +2,12 @@ package com.winzig.lexical.analyzer;
 
 public class Token_Char extends Token {
 
-    private char value;
+    public String name = "char";
+
+    public char value;
 
     public Token_Char(char letter) {
         value = letter;
-    }
-
-    public char getValue() {
-        return value;
-    }
-
-    public void setValue(char value) {
-        this.value = value;
     }
 
     @Override
@@ -21,5 +15,10 @@ public class Token_Char extends Token {
         return "Token_Char{" +
                 "value=" + value +
                 '}';
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

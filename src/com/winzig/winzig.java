@@ -2,23 +2,20 @@ package com.winzig;
 
 import com.winzig.lexical.analyzer.LexicalAnalyzer;
 import com.winzig.lexical.analyzer.Token;
+import com.winzig.parser.Parser;
 
 import java.io.IOException;
 
 public class winzig {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         LexicalAnalyzer lex = new LexicalAnalyzer();
+        lex.readInputProgram("winzig_01");
+        Parser parser = new Parser(lex);
+        parser.parse();
+        System.out.println("\n\n\n");
+        parser.traverseTree();
 
-        try {
-            lex.readInputProgram("winzig_15");
-            Token token;
-            while ((token = lex.getNextToken()) != null) {
-                System.out.println(token);
-            }
-        } catch (IOException e) {
-            System.out.println("Failed to read the input file.");
-        }
     }
 }

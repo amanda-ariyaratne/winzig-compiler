@@ -1,4 +1,7 @@
 package com.winzig.lexical.analyzer;
 
-public class Token {
+abstract public class Token {
+
+    public abstract String getName();
+
 }
