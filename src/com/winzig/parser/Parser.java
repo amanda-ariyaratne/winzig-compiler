@@ -877,8 +877,8 @@ public class Parser {
             node.firstChild = rightSibling;
             stack.add(node);
         }
-        traverseTree();
-        System.out.println("\n");
+        // traverseTree();
+        // System.out.println("\n");
     }
 
     public void traverseTree() {

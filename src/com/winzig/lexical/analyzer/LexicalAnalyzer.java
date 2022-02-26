@@ -466,7 +466,7 @@ public class LexicalAnalyzer {
                 }
                 case 30: {
                     if (c == ASCII.EQUAL) {
-                        lexemeBegin = forward;
+                        lexemeBegin = forward + 1;
                         return new Token_GE();
                     } else {
                         forward--;
