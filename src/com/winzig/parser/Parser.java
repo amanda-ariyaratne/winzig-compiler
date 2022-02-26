@@ -41,7 +41,6 @@ public class Parser {
         assert dot instanceof Token_Dot;
 //        System.out.println(dot);
 
-        System.out.println("program parsing finished");
         buildTree(program, 7);
     }
 
@@ -329,6 +328,8 @@ public class Parser {
         } else if (nextToken instanceof Token_While) {
             Token _while = lex.getNextToken();
 
+            Expression();
+
             Token _do = lex.getNextToken();
             assert _do instanceof Token_Do;
 //            System.out.println(_do);
@@ -408,14 +409,42 @@ public class Parser {
             Token of = lex.getNextToken();
             assert of instanceof Token_Of;
 //            System.out.println(of);
-            Caseclauses();
 
-            OtherwiseClause();
+            int numCaseClause = 0;
+            CaseClause();
+            numCaseClause++;
+
+            Token semicolon = lex.getNextToken();
+            assert semicolon instanceof Token_Semicolon;
+//        System.out.println(semicolon);
+
+            nextToken = lex.readNextToken();
+            boolean hasCaseClause = nextToken instanceof Token_Integer || nextToken instanceof Token_Char || nextToken instanceof Token_Identifier;
+            while (hasCaseClause) {
+
+                CaseClause();
+                numCaseClause++;
+
+                semicolon = lex.getNextToken();
+                assert semicolon instanceof Token_Semicolon;
+//            System.out.println(semicolon);
+
+                nextToken = lex.readNextToken();
+                hasCaseClause = nextToken instanceof Token_Integer || nextToken instanceof Token_Char || nextToken instanceof Token_Identifier;
+            }
+
+            int hasOtherwiseClause = 0;
+
+            if (lex.readNextToken() instanceof Token_Otherwise) {
+                OtherwiseClause();
+                hasOtherwiseClause = 1;
+            }
+
 
             Token end = lex.getNextToken();
             assert end instanceof Token_End;
 //            System.out.println(end);
-            buildTree(_case, 3);
+            buildTree(_case, 1 + numCaseClause + hasOtherwiseClause);
 
         } else if (nextToken instanceof Token_Read) {
             Token read = lex.getNextToken();
@@ -451,6 +480,8 @@ public class Parser {
             Expression();
             buildTree(_return, 1);
 
+        } else if (nextToken instanceof Token_Begin) {
+            Body();
         } else {
             buildTree(new Token_Null(), 0);
         }
@@ -488,25 +519,7 @@ public class Parser {
     }
 
     private void Caseclauses() {
-        CaseClause();
 
-        Token semicolon = lex.getNextToken();
-        assert semicolon instanceof Token_Semicolon;
-//        System.out.println(semicolon);
-
-        Token nextToken = lex.readNextToken();
-        boolean hasCaseClause = nextToken instanceof Token_Integer || nextToken instanceof Token_Char || nextToken instanceof Token_Identifier;
-        while (hasCaseClause) {
-
-            CaseClause();
-
-            semicolon = lex.getNextToken();
-            assert semicolon instanceof Token_Semicolon;
-//            System.out.println(semicolon);
-
-            nextToken = lex.readNextToken();
-            hasCaseClause = nextToken instanceof Token_Integer || nextToken instanceof Token_Char || nextToken instanceof Token_Identifier;
-        }
     }
 
     private void CaseClause() {
@@ -864,8 +877,8 @@ public class Parser {
             node.firstChild = rightSibling;
             stack.add(node);
         }
-        // traverseTree();
-        // System.out.println("\n");
+        traverseTree();
+        System.out.println("\n");
     }
 
     public void traverseTree() {
