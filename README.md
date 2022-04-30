@@ -1,5 +1,5 @@
-#WinZig Compiler
-###CS4542 - Compiler Design
+# WinZig Compiler
+### CS4542 - Compiler Design
 
 `Index Number : 170043A`
 
