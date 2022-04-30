@@ -15,8 +15,8 @@ CLASSES = \
 	src/lex/LexicalAnalyzer.java \
 	src/parser/Node.java \
 	src/parser/Parser.java \
-	src/compiler/CodeGenerator.java \
 	src/compiler/DclnRecord.java \
+	src/compiler/CodeGenerator.java \
 	src/compiler/SemanticAnalyzer.java \
 	src/winzigc.java
 

@@ -270,8 +270,8 @@ public class SemanticAnalyzer {
     private String evaluateOutputNode(Node output, String type) {
         for (int i = 1; i <= output.noOfChildren; i++) {
             String type1 = evaluateNode(output.getNthChild(i), "");
-            if (!type1.equals("integer")) {
-                this.errors = this.errors + "Illegal type for output. Integer expected.\n";
+            if (!type1.equals("integer") && !type1.equals("char") && !type1.equals("string")) {
+                this.errors = this.errors + "Illegal type for output.\n";
             }
         }
         return "statement";
