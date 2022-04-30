@@ -1,0 +1,26 @@
+
+i
+java:S3776ƒ"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(€¹©Ş
+g	java:S128"LEnd this switch case with an unconditional break, return or throw statement.(ğÁ–Óûÿÿÿÿ
+b	java:S128´"LEnd this switch case with an unconditional break, return or throw statement.(Ó‚ï
+b	java:S128Ö"LEnd this switch case with an unconditional break, return or throw statement.(­Ó–Ô
+g	java:S128ı"LEnd this switch case with an unconditional break, return or throw statement.(ı´ª¿ûÿÿÿÿ
+8	java:S131ê""Add a default case to this switch.(ş™ÅŞ
+8	java:S131‘""Add a default case to this switch.(ş™ÅŞ
+i
+java:S3776°"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(Ò³ôØ
+a	java:S128É"LEnd this switch case with an unconditional break, return or throw statement.(Ö—Îc
+b	java:S128À"LEnd this switch case with an unconditional break, return or throw statement.(ò‘
+8	java:S131´""Add a default case to this switch.(ş™ÅŞ
+8	java:S131ß""Add a default case to this switch.(ş™ÅŞ
+8	java:S131†""Add a default case to this switch.(ş™ÅŞ
+8	java:S131¡""Add a default case to this switch.(ş™ÅŞ
+8	java:S131À""Add a default case to this switch.(ş™ÅŞ
+Y
+java:S1479Ä"BReduce the number of non-empty switch cases from 34 to at most 30.(›õñó
+b
+java:S1301†"KReplace this "switch" statement by "if" statements to increase readability.(ş™ÅŞ
+b
+java:S1301¡"KReplace this "switch" statement by "if" statements to increase readability.(ş™ÅŞ
+b
+java:S1301À"KReplace this "switch" statement by "if" statements to increase readability.(ş™ÅŞ
